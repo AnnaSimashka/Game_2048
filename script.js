@@ -29,6 +29,7 @@ class GameManager {
     init() {
         this.board = new Board();
         this.board.init();
+        this.board.generateNewCell();
         document.addEventListener('keyup', clickControl);
     }
 
@@ -46,28 +47,33 @@ class Board {
 
     init() {
         const fragment = document.createDocumentFragment();
-        
-        for (let i = 0; i < this.widthBoard * this.widthBoard; i++) {
-            const square = document.createElement('div');
-            square.innerHTML = '';
-            square.className = 'cell';
 
-            fragment.appendChild(square);
-            this.squares.push(square);
+        for (let i = 0; i < this.widthBoard * this.widthBoard; i++) {
+            const cell = new Cell();
+
+            fragment.appendChild(cell.getNewElement());
+            this.squares.push(cell.dom);
         }
 
         this.wrapper.appendChild(fragment);
-
-        const oneCell = Math.floor(Math.random() * (this.widthBoard * this.widthBoard));
-        this.squares[oneCell].innerHTML = '2';
     }
 
     generateNewCell() {
-        console.log('generateNewCell')
+        const randomNumber = Math.floor(Math.random() * this.squares.length);
+
+        if (this.squares[randomNumber].innerHTML === '') {
+            this.squares[randomNumber].innerHTML = 2;
+            this.addColours();
+            // проверить на GameOver
+        } else {
+            this.generateNewCell();
+        }
     }
-    
+
     addColours() {
-        console.log('addColours')
+        for (let i = 0; i < this.squares.length; i++) {
+            this.squares[i].style.backgroundColor = colorCell[Math.trunc(Math.sqrt(this.squares[i].innerHTML))];
+        }
     }
 }
 
@@ -86,7 +92,12 @@ class Cell {
     }
 
     getNewElement() {
-        console.log('getNewElement')
+        const square = document.createElement('div');
+        square.innerHTML = '';
+        square.className = 'cell';
+        this.dom = square;
+        
+        return square;
     }
 }
 
@@ -94,7 +105,13 @@ const start = new GameManager();
 start.init();
 
 function clickControl(event) {
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    if (event.key === 'ArrowUp') {
+        console.log(event.key)
+    } else if (event.key === 'ArrowDown') {
+        console.log(event.key)
+    } else if (event.key === 'ArrowLeft') {
+        console.log(event.key)
+    } else if (event.key === 'ArrowRight') {
         console.log(event.key)
     }
 }

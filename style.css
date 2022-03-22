@@ -77,6 +77,11 @@ header > div {
     margin: 2vmin 2vmin 0 0;
     background-color: #C5C6BE;
     float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	font-size: 40px;
+    font-weight: bold;
 }
 /* add left margin to first childs of rows */
 .cell:nth-child(4n+1) {
