@@ -3,23 +3,28 @@ body, html {
     height: 100%;
     overflow: hidden;
 }
+
 body {
     background: #faf8ef;
     color: #776e65;
 }
+
 h1 {
     margin: 0;
     font-size: 60px;
 }
+
 header {
     width: 70vmin;
     margin: 3% auto 0;
     font-size: 18px;
 }
-header > div {
+
+header>div {
     display: flex;
     justify-content: space-between;
 }
+
 .restart-button {
     display: flex;
     height: 70px;
@@ -31,6 +36,7 @@ header > div {
     font-weight: bold;
     font-size: 22px;
 }
+
 .scores-container {
     display: flex;
     justify-content: flex-start;
@@ -38,6 +44,7 @@ header > div {
     text-align: left;
     color: #f9f6f2;
 }
+
 .score, .best-result {
     position: relative;
     width: 90px;
@@ -47,12 +54,15 @@ header > div {
     border-radius: 3px;
     text-align: center;
 }
+
 .score::before {
     content: "Счет";
 }
+
 .best-result::before {
     content: "Рекорд";
 }
+
 .score::before, .best-result::before {
     position: absolute;
     top: 7px;
@@ -67,10 +77,12 @@ header > div {
     margin: 0 auto;
     background-color: #AAACA8;
 }
+
 .grid {
     position: relative;
     width: 100%;
 }
+
 .cell {
     width: 15vmin;
     height: 15vmin;
@@ -80,9 +92,10 @@ header > div {
     display: flex;
     justify-content: center;
     align-items: center;
-	font-size: 40px;
+    font-size: 40px;
     font-weight: bold;
 }
+
 /* add left margin to first childs of rows */
 .cell:nth-child(4n+1) {
     margin-left: 2vmin;
