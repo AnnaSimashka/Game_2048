@@ -2,6 +2,7 @@
 
 import Board from './board.js';
 import Cell from './cell.js';
+import '../style.css';
 
 const scoreDisplay = document.querySelector('.score');
 const resultDisplay = document.querySelector('.result');
