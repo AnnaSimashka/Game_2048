@@ -16,7 +16,7 @@ const colorCell = [
 ];
 
 export default class Cell {
-  constructor(value, dom) {
+  constructor() {
     this.value = '';
     this.dom = null;
   }
