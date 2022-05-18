@@ -6,9 +6,10 @@ import '../style.css';
 const resultDisplay = document.querySelector('.best-result');
 const buttonNewGame = document.querySelector('.restart-button');
 const url = 'https://api.kazanina-online.ru/api/point';
+const numberOfCells = 16;
 
 export default class GameManager {
-  constructor(isGameOver, score, board) {
+  constructor() {
     this.isGameOver = false;
     this.score = 0;
     this.board = null;
@@ -21,7 +22,7 @@ export default class GameManager {
     this.board.generateNewCell();
     document.addEventListener('keyup', this.clickControl.bind(this));
     buttonNewGame.addEventListener('click', this.newGame.bind(this));
-    this.getData();
+    this.getData(this.board.gameManager.score);
   }
 
   checkForGameOver() {
@@ -40,10 +41,11 @@ export default class GameManager {
       }
     }
 
-    if (counter === 16) {
+    if (counter === numberOfCells) {
       alert('Игра окончена!');
       this.isGameOver = true;
       this.fetchApi(this.board.gameManager.score);
+      this.getData(this.board.gameManager.score);
 
       return false;
     }
@@ -70,16 +72,16 @@ export default class GameManager {
 
   }
 
-  getData() {
+  getData(score) {
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
         const record = data.reduce((prev, current) => prev.count > current.count ? prev : current);
-        resultDisplay.textContent = record.count;
+        console.log('getData')
+        score > record.count ? resultDisplay.textContent = score : resultDisplay.textContent = record.count;
       })
       .catch(error => console.error(error));
   }
-
 
   newGame() {
     const cellAll = document.querySelectorAll('.cell');
@@ -93,7 +95,7 @@ export default class GameManager {
     this.board = null;
 
     for (let i = 0; i < cellAll.length; i++) {
-      if (cellAll.length === 16) {
+      if (cellAll.length === numberOfCells) {
         cellAll[i].remove();
       }
     }

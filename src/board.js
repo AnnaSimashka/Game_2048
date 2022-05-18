@@ -4,7 +4,7 @@ import GameManager from './index.js';
 const scoreDisplay = document.querySelector('.score');
 
 export default class Board {
-  constructor(widthBoard, squares, wrapper, gameManager) {
+  constructor() {
     this.widthBoard = 4;
     this.squares = [];
     this.wrapper = document.querySelector('.grid');
@@ -29,8 +29,6 @@ export default class Board {
 
     if (this.squares[randomNumber].getValue() === '') {
       this.squares[randomNumber].setValue(2);
-      // проверить на GameOver
-      // this.gameManager.checkForGameOver();
     } else {
       this.generateNewCell();
     }
@@ -75,13 +73,10 @@ export default class Board {
         this.squares[i].setValue(combinedTotal);
         this.squares[i - this.widthBoard].setValue('');
 
-        this.gameManager.score = this.gameManager.score + combinedTotal;
+        this.gameManager.score += combinedTotal;
         scoreDisplay.textContent = this.gameManager.score;
       }
     }
-    // проверить на выигрыш
-    // this.gameManager.checkForGameOver();
-
   }
 
   movingRow(direction) {
@@ -118,11 +113,9 @@ export default class Board {
         this.squares[i].setValue(combinedTotal);
         this.squares[i - 1].setValue('');
 
-        this.gameManager.score = this.gameManager.score + combinedTotal;
+        this.gameManager.score += combinedTotal;
         scoreDisplay.textContent = this.gameManager.score;
       }
     }
-
-    // проверить на выигрыш
   }
 }
