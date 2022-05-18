@@ -7,6 +7,8 @@ const resultDisplay = document.querySelector('.best-result');
 const buttonNewGame = document.querySelector('.restart-button');
 const url = 'https://api.kazanina-online.ru/api/point';
 const numberOfCells = 16;
+let contextclickControl = null;
+let contextNewGame = null;
 
 export default class GameManager {
   constructor() {
@@ -20,8 +22,12 @@ export default class GameManager {
     this.board.init();
     this.board.generateNewCell();
     this.board.generateNewCell();
-    document.addEventListener('keyup', this.clickControl.bind(this));
-    buttonNewGame.addEventListener('click', this.newGame.bind(this));
+
+    contextclickControl = this.clickControl.bind(this);
+    contextNewGame = this.newGame.bind(this);
+    document.addEventListener('keyup', contextclickControl);
+    buttonNewGame.addEventListener('click', contextNewGame);
+
     this.getData(this.board.gameManager.score);
   }
 
@@ -77,30 +83,27 @@ export default class GameManager {
       .then(resp => resp.json())
       .then(data => {
         const record = data.reduce((prev, current) => prev.count > current.count ? prev : current);
-        console.log('getData')
         score > record.count ? resultDisplay.textContent = score : resultDisplay.textContent = record.count;
       })
       .catch(error => console.error(error));
   }
 
   newGame() {
-    const cellAll = document.querySelectorAll('.cell');
+    const cells = document.querySelectorAll('.cell');
     const scoreDisplay = document.querySelector('.score');
 
     this.isGameOver = false;
     this.score = 0;
-    for (let i = 0; i < this.board.widthBoard * this.board.widthBoard; i++) {
+    for (let i = 0; i < numberOfCells; i++) {
       this.board.squares[i].setValue('');
     }
     this.board = null;
-
-    for (let i = 0; i < cellAll.length; i++) {
-      if (cellAll.length === numberOfCells) {
-        cellAll[i].remove();
-      }
-    }
-
+    cells.forEach(cell => cell.remove());
     scoreDisplay.textContent = '0';
+
+    document.removeEventListener('keyup', contextclickControl);
+    buttonNewGame.removeEventListener('click', contextNewGame);
+
     this.init();
   }
 
